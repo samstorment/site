@@ -1,0 +1,98 @@
+:root {
+    --clr-bg: white;
+    --clr-text: black;
+    --clr-border: lightgray; 
+    --clr-shadow: lightgray;
+    --clr-hover: rgb(240, 240, 240);
+}
+
+.dark {
+    --clr-bg: rgb(20, 20, 20);
+    --clr-text: white;
+    --clr-border: rgb(45,45,45);
+    --clr-shadow: rgb(30,30,30);
+    --clr-hover: rgb(30,30,30)
+}
+
+.theme-transition {
+    transition: background-color ease-in-out 200ms, color ease-in-out 200ms;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+h5 {
+    font-size: .9rem;
+}
+
+h6 {
+    font-size: .8rem;
+}

@@ -4,6 +4,39 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
+		<script>
+			function getTheme() {
+				const persistedColorPreference = window.localStorage.getItem('color-theme');
+				const hasPersistedPreference = typeof persistedColorPreference === 'string';
+
+				if (hasPersistedPreference) {
+					return persistedColorPreference;
+				}
+
+				const mql = window.matchMedia('(prefers-color-scheme: dark)');
+				const hasMediaQueryPreference = typeof mql.matches === 'boolean';
+
+				if (hasMediaQueryPreference) {
+					return mql.matches ? 'dark' : 'light';
+				}
+
+				return 'light';
+			}
+
+			function updateTheme(theme) {
+				
+				if (theme === "dark") {
+					document.documentElement.classList.add("dark");
+				} else {
+					document.documentElement.classList.remove("dark");
+				}
+				window.localStorage.setItem('color-theme', theme);
+			}
+
+			const theme = getTheme();
+
+			updateTheme(theme);
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

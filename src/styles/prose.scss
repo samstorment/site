@@ -1,0 +1,176 @@
+.prose {
+
+    padding-top: 4em;
+    font-size: 1.15rem;
+
+    h2:first-child {
+        margin-top: 0;
+    }
+
+    h2,h3,h4,h5,h6 {
+        margin: 2.5em 0 1em 0;
+    }
+
+    p {
+        margin-bottom: 1.35rem;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    ul,ol {
+        padding-left: 2ch;
+    }
+  
+    a {
+        color: teal;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    mark {
+        background-color: teal;
+        color: white;
+        padding: .2em .4em;
+        border-radius: .25em;
+    }
+
+    blockquote {
+        margin-bottom: 1.5rem;
+        padding: 1em;
+        border-radius: .25rem;
+        border: 1px solid var(--clr-border);
+        border-left: 8px solid var(--clr-border);
+        // border-top-right-radius: .25rem;
+        // border-bottom-right-radius: .25rem;
+        // box-shadow: 0 0 .4rem 0 var(--clr-shadow);
+    }
+ 
+    blockquote p:last-child {
+        margin-bottom: 0;
+    }
+
+    kbd {
+        padding: 0 .4em;
+        background-color: var(--clr-hover);
+        box-shadow: 2px 2px 0 1px var(--clr-border);
+        border-radius: .25em;
+        margin: 0 .2em;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        border-left: 1px solid var(--clr-border);
+        border-top: 1px solid var(--clr-border);
+    }
+
+    table {
+        margin-bottom: 1rem;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid var(--clr-border);
+    }
+
+    th, td {
+        padding: .5em;
+    }
+
+    .shiki-container{
+        figcaption {
+
+            div {
+                width: fit-content;
+                padding: .4em 1em;
+                background-color: #1e1e1e;
+                color: white;
+                border-radius: .25em;
+                border-bottom-width: 0;
+                position: relative;
+                margin-bottom: 3px;
+            }
+        }
+    } 
+
+    pre {
+        margin-bottom: 3rem;
+        border-radius: .25em;
+        overflow: auto;
+        padding: 1rem 0;
+
+    }
+
+    code {
+        background-color: var(--clr-border);
+        padding: .1em .4em;
+        border-radius: .25em;
+    }
+
+    pre code {
+        all: unset;
+        display: inline-block;
+        min-width: 100%;
+        background-color: inherit;
+        padding: 0;
+        border-radius: 0;
+        counter-reset: step;
+        counter-increment: step 0;
+    }
+
+    $lineBorder: 4px;
+    $insColor: hsl(160, 84%, 30%);
+    $delColor: hsla(0, 84%, 30%);
+
+    pre .line {
+        background-color: inherit;
+        position: relative;
+        padding: 0 1rem;
+        border-left: $lineBorder solid transparent;
+        display: inline-block;
+        min-width: 100%;
+    }
+
+    pre .line:empty::before {
+        content: ' ';
+    }
+
+    pre .line.ins {
+        border-left: $lineBorder solid $insColor;
+        background-color: hsl(160 84% 39% / 20%);
+    }
+
+    pre .line.del {
+        border-left: $lineBorder solid $delColor;
+        background-color: hsla(0, 84%, 39%, 0.2);
+    }
+
+    pre .line.mark {
+        border-left: $lineBorder solid hsla(214, 89%, 45%);
+        background-color: hsla(214, 89%, 32%, 0.3);
+    }
+
+    pre .line::after {
+        position: absolute;
+        display: inline-block;
+        left: 0;
+        margin-left: 4px;
+    }
+
+    pre .line.ins::after {
+        content: '+';
+        color: $insColor;
+    }
+
+    pre .line.del::after {
+        content: '-';
+        color: gray;
+    }
+}
