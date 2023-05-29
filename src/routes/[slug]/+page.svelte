@@ -4,6 +4,10 @@
     import { slug } from '$posts/_config.js';
     import Circle from "./Circle.svelte";
     import { rand } from "$lib/util/util";
+    import Grainy from "./Grainy.svelte";
+    import { drawCircles, type CachedImage, type Context } from "$lib/util/canvas";
+    import Head from "../Head.svelte";
+    import { url } from "$lib/util/constants";
     export let data;
 
     let topWidth = 0;
@@ -13,7 +17,6 @@
 
     let top: HTMLDivElement;
 
-    type Context = CanvasRenderingContext2D;
 
     let canvas: HTMLCanvasElement;
     let context: Context;
@@ -26,51 +29,7 @@
 
     let cachedImage: CachedImage;
 
-    type CachedImage = {
-        w: number,
-        h: number,
-        data: ImageData
-    }
 
-    async function drawCircles(): Promise<CachedImage> {
-        const size = gridSize;
-
-        context.lineWidth = 1;
-        context.lineCap = 'round';
-        
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.lineTo(100, 100);
-        context.closePath();
-        
-        context.strokeStyle = 'hotpink';
-
-        let r = 8;
-
-        context.strokeStyle = '#123abc';
-
-        for (let i = 0; i < canvasWidth; i += size) {
-            drawCircle(i, rand(0, canvasHeight / size) * size, rand(r-1, r+5), "turquoise");
-            drawCircle(i, rand(0, canvasHeight / size) * size, rand(r-1, r+5), "teal");
-            drawCircle(i, rand(0, canvasHeight / size) * size, rand(r-1, r+5), "salmon");
-            drawCircle(i, rand(0, canvasHeight / size) * size, rand(r-1, r+5), "gold");
-            drawCircle(i, rand(0, canvasHeight / size) * size, rand(r-1, r+5), "cornflowerblue");
-        }
-
-        await tick();
-
-        const data = context.getImageData(0, 0, canvasWidth, canvasHeight);
-
-        return { w: canvasWidth, h: canvasHeight, data };
-    }
-
-    function drawCircle(x: number, y: number, r: number, color: string) {
-        context.fillStyle = color;
-        context.beginPath();
-        context.ellipse(x, y, r, r, 0, 0, 2 * Math.PI, );
-        context.fill();
-        context.closePath();
-    }
 
     let observer: ResizeObserver;
 
@@ -94,7 +53,7 @@
                 topHeight * 1.5 > cachedImage.h;
             
             if (outgrewCache) {
-                cachedImage = await drawCircles();
+                cachedImage = await drawCircles(context, canvasWidth, canvasHeight, 5, 2);
                 return;
             }
 
@@ -104,7 +63,7 @@
         function setDimensions() {
             const rect = top.getBoundingClientRect();
             topWidth = rect.width;
-            topHeight= rect.height;
+            topHeight = rect.height;
         }
 
         setTimeout(() => introDone = true, 1000);
@@ -121,22 +80,13 @@
 
 </script>
 
-<svelte:head>
-    <title>{data.meta.title}</title>
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content={data.meta.title} />
-</svelte:head>
-
-
-<svg width="0" height="0">
-    <filter id="grainy">
-        <feTurbulence 
-            type="turbulence"
-            baseFrequency="0.8"
-            result="turbulence"
-        />
-    </filter>
-</svg>
+<Head 
+    title={data.meta.title}
+    description={data.meta.description}
+    type="article"
+    image="{url}/thumbnails/{data.slug}.png"
+    imageAlt="The title and description of the article titled {data.meta.title}"
+/>
 
 <article>
     <div 
@@ -145,7 +95,7 @@
         on:pointerenter={() => hovering = introDone && true }
         on:pointerleave={() => hovering = false }
     >
-        <div id="grainy-canvas">
+        <Grainy>
             {#if mounted}
                 <canvas 
                     width={canvasWidth} height={canvasHeight} 
@@ -155,7 +105,7 @@
                     on:transitionend={() => introDone = true}
                 ></canvas>
             {/if}
-        </div>
+        </Grainy>
         {#each { length: 100 } as _, i}
             <Circle index={i} {hovering} />
         {/each}
@@ -163,7 +113,6 @@
             <h1>{data.meta.title}</h1>
             <p>{data.meta.date.toLocaleDateString()}</p>
         </hgroup>
-
     </div>
     
     <div class="content">
@@ -198,7 +147,7 @@
         padding-bottom: 1em;
         padding: 3rem 1em;
         color: white;
-        z-index: 999;
+        z-index: 2;
         position: relative;
         text-shadow: 0 2px .5em black;
         box-shadow: inset 0 0 2em 0 black;
@@ -214,34 +163,6 @@
         font-size: 3rem;
         margin-top: 5rem;
     }
-
-    #grainy-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: linear-gradient(to right, turquoise, salmon, teal, gold, cornflowerblue);
-        background-color: hsla(258, 89%, 18%, 0.5);        
-    }
-
-    #grainy-canvas::before, #grainy-canvas::after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        content: '';
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        opacity: 70%;
-        margin: 0;
-        padding: 0;
-    }
-
-    #grainy-canvas::before {
-        filter: url(#grainy);
-    }
-
     canvas {
         position: absolute;
         top: -50%;

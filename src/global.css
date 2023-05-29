@@ -4,6 +4,8 @@
     --clr-border: lightgray; 
     --clr-shadow: lightgray;
     --clr-hover: rgb(240, 240, 240);
+
+    --top-height: 70px;
 }
 
 .dark {
@@ -32,6 +34,8 @@
 html,
 body {
     height: 100%;
+    scroll-padding-top: var(--top-height);
+    scroll-behavior: smooth;
 }
 
 body {
@@ -42,6 +46,10 @@ body {
     background-color: var(--clr-bg);
     color: var(--clr-text);
 
+}
+
+#site {
+    min-height: 100%;
 }
 
 img,

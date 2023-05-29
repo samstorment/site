@@ -36,7 +36,7 @@ export const File = z.object({
 
 export const Metadata = z.object({
     title: z.string(),
-    description: z.string().optional(),
+    description: z.string(),
     date: z.string().pipe(z.coerce.date()),
     draft: z.boolean().default(false),
     categories: z.array(z.enum(categoryNames)).default([])

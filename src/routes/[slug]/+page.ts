@@ -8,9 +8,10 @@ export async function load({ params, fetch }) {
             slug: params.slug
         });
 
-        const post = await import(`../../../posts/${slug}.md`);
+        const post = await import(`../../posts/${slug}.md`);
 
         return {
+            slug: slug,
             meta: Metadata.parse(post.metadata),
             content: post.default
         }

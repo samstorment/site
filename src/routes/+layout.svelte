@@ -1,70 +1,86 @@
 <script lang="ts">
     import { toggleTheme } from '$lib/util/theme';
     import { fly } from 'svelte/transition';
-    import '../../global.css';
+    import '../global.css';
     import Icon from '@iconify/svelte';
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
+    import { dev } from '$app/environment';
 
     export let data;
 
     let header: HTMLElement;
+    let top: HTMLDivElement;
+    let observer: ResizeObserver;
 
     let theme = "";
     $: other = theme === "dark" ? "light" : "dark";
+
 
     onMount(() => {
         theme = data.theme;
         // add this on mount or there is a color flicker
         document.body.classList.add('theme-transition');
         header.classList.add('theme-transition');
+
+        observer = new ResizeObserver(() => {
+            document.documentElement.style.setProperty('--top-height', top.getBoundingClientRect().height + 'px');
+        });
+
+        observer.observe(top);
+
+        return () => {
+            observer.disconnect();
+        }
     });
-
-
-
 </script>
 
-<div id="all">
 
-<header bind:this={header}>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/categories">Categories</a>
-        <button 
-            title="Activate {other} mode"
-            aria-label="Activate {other} mode"
-            id="theme-button" 
-            type="button"
-            on:click={() => theme = toggleTheme()}
-            class:dark={theme === "dark"}
-        >
-            {#key theme}
-                <span in:fly={{y: -100}}>
-                    <Icon icon="{theme === "dark" ? "ph:moon" : "ph:sun"}" />
-                </span>
-            {/key}
-            <div class="bloom"></div>
-        </button>
-    </nav>
-</header>
+<div id="top" bind:this={top}>
+    <header bind:this={header}>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/categories">Categories</a>
+            {#if dev}
+                <a href="/admin">Admin</a>
+            {/if}
+            <button 
+                title="Activate {other} mode"
+                aria-label="Activate {other} mode"
+                id="theme-button" 
+                type="button"
+                on:click={() => theme = toggleTheme()}
+                class:dark={theme === "dark"}
+            >
+                {#key theme}
+                    <span in:fly={{y: -100}}>
+                        <Icon icon="{theme === "dark" ? "ph:moon" : "ph:sun"}" />
+                    </span>
+                {/key}
+                <div class="bloom"></div>
+            </button>
+            <a href="/rss.xml" title="RSS Feed" target="_blank">
+                <span><Icon icon="mdi:rss" /></span>
+            </a>
+        </nav>
+    </header>
+</div>
 
 <main>
     <slot />
 </main>
     
-</div>
+
 
 <style>
-    #all {
-        min-height: 100%;
+    #top {
+        position: sticky;
+        top: 0;
+        z-index: 9999;
     }
 
     header {
         padding: 1em;
-        position: sticky;
-        top: 0;
         background-color: var(--clr-bg);
-        z-index: 9999;
-        /* backdrop-filter: blur(10px); */
     }
     
     nav {
