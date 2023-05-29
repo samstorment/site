@@ -1,8 +1,6 @@
 import { description, title, url } from '$lib/util/constants.js';
 import type { Post } from '$posts/_config.js';
 
-export const prerender = true;
-
 export async function GET({ fetch }) {
 	const response = await fetch('api/posts')
 	const posts: Post[] = await response.json()
