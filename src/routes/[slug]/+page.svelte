@@ -163,6 +163,7 @@
         font-size: 3rem;
         margin-top: 5rem;
     }
+    
     canvas {
         position: absolute;
         top: -50%;

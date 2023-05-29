@@ -19,11 +19,16 @@
         margin: 0 auto;
     }
 
-    ul {
-        list-style: disc;
-    }
-
     a {
+        display: block;
+        padding: 1rem;
+        border: 1px solid var(--clr-border);
         color: inherit;
+        border-radius: .25rem;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        box-shadow: 0 0 .4rem 0 var(--clr-shadow);
     }
 </style>

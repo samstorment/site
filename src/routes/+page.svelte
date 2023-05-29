@@ -5,7 +5,7 @@
     export let data;
 </script>
 
-<Head title="" />
+<Head title="Home" />
 
 <div id="page">
     <PostList posts={data.posts} title="Posts" />

@@ -6,9 +6,6 @@
     export let data;
 
     let page: HTMLDivElement;
-    let a: HTMLAnchorElement;
-
-    let images: HTMLImageElement[] = [];
 
     onMount(async () => {
         const formData = new FormData();
@@ -38,8 +35,11 @@
     });
 </script>
 
+<Head title="Thumbnail Generator" />
 
 <div id="page" bind:this={page}>
+    <h1 id="title">Write Thumbnails to <code>/static/thumbnails</code> Folder</h1>
+
     {#each data.posts as p}
         <div class="thumbnail">
             <hgroup>
@@ -56,13 +56,15 @@
         display: grid;
         gap: 1em;
         padding: 1rem;
+        max-width: calc(1200px);
+        margin: 0 auto;
     }
 
     .thumbnail {
         margin: 0 auto;
         width: 1200px;
         height: 630px;
-        background-image: linear-gradient(to right, turquoise, salmon, teal, gold, cornflowerblue);
+        background-image: linear-gradient(to right, teal, cornflowerblue);
         display: flex;
         align-items: center;
         text-align: center;
@@ -76,12 +78,18 @@
         text-align: center;
     }
 
-    h1 {
+    hgroup h1 {
         font-size: 8rem;
     }
 
-    p {
+    hgroup p {
         font-size: 2rem;
+    }
+
+    code {
+        background-color: var(--clr-border);
+        padding: 0 .4rem;
+        border-radius: .25rem;
     }
 </style>
 

@@ -1,9 +1,12 @@
 <script lang="ts">
+    import Head from "../Head.svelte";
+
     export let data;
 
     let letters = new Set(data.categories.map(c => c.name.charAt(0).toLowerCase()));
 </script>
 
+<Head title="Categories" />
 
 <div id="page">
     <section>
