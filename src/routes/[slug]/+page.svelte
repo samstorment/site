@@ -112,7 +112,9 @@
         {/each}
         <hgroup>
             <h1>{data.meta.title}</h1>
-            <Date date={data.meta.date} />
+            <p>
+                <Date date={data.meta.date} />
+            </p>
         </hgroup>
     </div>
     
