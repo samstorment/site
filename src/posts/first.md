@@ -3,7 +3,7 @@ title: First Post
 description: The description of my post
 date: 2023-02-04
 categories: [ Svelte, SvelteKit, TypeScript, JavaScript ]
-draft: false
+draft: true
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in SvelteKit.

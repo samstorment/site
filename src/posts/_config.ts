@@ -8,7 +8,8 @@ const categoryNames = [
     'Canvas', 
     'Java', 
     'JavaScript', 
-    'TypeScript'
+    'TypeScript',
+    'UI/UX'
 ] as const;
 
 type CategoryName = typeof categoryNames[number];
@@ -17,7 +18,8 @@ export type Category = { name: CategoryName, slug: string };
 
 // provide better slugs when needed
 const categorySlugs: Partial<CategorySlug> = {
-    'C#': 'c-sharp'
+    'C#': 'c-sharp',
+    'UI/UX': 'ui-ux'
 };
 
 export const slug = (name: CategoryName) => categorySlugs[name] ?? name.toLowerCase();
@@ -37,7 +39,7 @@ export const File = z.object({
 export const Metadata = z.object({
     title: z.string(),
     description: z.string(),
-    date: z.string().pipe(z.coerce.date()),
+    date: z.string().datetime(),
     draft: z.boolean().default(false),
     categories: z.array(z.enum(categoryNames)).default([])
 });

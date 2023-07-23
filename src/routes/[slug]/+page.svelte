@@ -8,6 +8,7 @@
     import { drawCircles, type CachedImage, type Context } from "$lib/util/canvas";
     import Head from "../Head.svelte";
     import { url } from "$lib/util/constants";
+    import Date from "$lib/components/Date.svelte";
     export let data;
 
     let topWidth = 0;
@@ -111,7 +112,7 @@
         {/each}
         <hgroup>
             <h1>{data.meta.title}</h1>
-            <p>{data.meta.date.toLocaleDateString()}</p>
+            <Date date={data.meta.date} />
         </hgroup>
     </div>
     

@@ -3,6 +3,7 @@ title: Second Post
 description: The description of my second post
 date: 2023-02-19
 categories: [ CSS, Canvas, C# ]
+draft: true
 ---
 
 ## The Second Post
